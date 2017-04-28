@@ -37,9 +37,6 @@ var strategy = new BasicStrategy(function(username, password, callback){
 		});
 	});
 
-
-
-
 	app.post("/users", jsonParser, function (req, res) {
 		if (!req.body) {
 			return res.status(400).json({
@@ -117,6 +114,13 @@ var strategy = new BasicStrategy(function(username, password, callback){
 					return res.status(201).json({});
 				});
 			});
+		});
+	});
+
+	app.use(passport.initialize());
+	app.get("/hidden", passport.authenticate("basic", {session:false}), function(req, res){
+		res.json({
+			message: "Luke...I am your father"
 		});
 	});
 
